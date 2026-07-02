@@ -13,8 +13,11 @@ Sistema integral de Punto de Venta (POS) y Administración de Inventario, diseñ
 
 ## 📸 Capturas de Pantalla
 
-### 1. Landing Page Pública (Catálogo Dinámico)
+### 1. Landing Page Pública
 ![Landing Page](docs/images/landing_page.png)
+
+### 2. Catálogo de Productos Completo
+![Catálogo de Productos](docs/images/catalog_page.png)
 
 ### 2. Interfaz de Punto de Venta y Cobro QR
 ![POS Yape QR](docs/images/pos_yape_qr.png)
