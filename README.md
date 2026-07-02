@@ -13,13 +13,16 @@ Sistema integral de Punto de Venta (POS) y Administración de Inventario, diseñ
 
 ## 📸 Capturas de Pantalla
 
-### 1. Interfaz de Punto de Venta y Cobro QR
+### 1. Landing Page Pública (Catálogo Dinámico)
+![Landing Page](docs/images/landing_page.png)
+
+### 2. Interfaz de Punto de Venta y Cobro QR
 ![POS Yape QR](docs/images/pos_yape_qr.png)
 
-### 2. Panel Lateral de Carrito (Scroll Dinámico)
+### 3. Panel Lateral de Carrito (Scroll Dinámico)
 ![POS Scroll Demo](docs/images/pos_scroll_demo.png)
 
-### 3. Ticket de Venta (Formato Térmico 80mm)
+### 4. Ticket de Venta (Formato Térmico 80mm)
 ![Ticket de Venta](docs/images/pos_ticket.png)
 
 ## 🛠️ Stack Tecnológico
