@@ -94,7 +94,7 @@ class ReporteController extends Controller
                                 ->orderBy('stock')
                                 ->get();
 
-        $mermasRecientes = \App\Models\InventarioMovimiento::where('tipo_movimiento', 'merma')
+        $mermasRecientes = \App\Models\InventarioMovimiento::where('tipo', 'merma')
                                 ->with(['producto', 'usuario'])
                                 ->orderBy('created_at', 'desc')
                                 ->limit(10)
