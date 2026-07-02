@@ -92,6 +92,8 @@ Route::middleware(['auth'])->group(function () {
 
         // Reportes
         Route::get('/reportes', [ReporteController::class, 'index'])->name('reportes.index');
+        Route::get('/reportes/inventario', [ReporteController::class, 'inventario'])->name('reportes.inventario');
+        Route::get('/reportes/cajas', [ReporteController::class, 'cajas'])->name('reportes.cajas');
 
         // Configuración General
         Route::get('/configuracion', [App\Http\Controllers\ConfiguracionController::class, 'index'])->name('configuracion.index');

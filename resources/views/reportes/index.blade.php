@@ -6,6 +6,8 @@
 
 @section('content')
 
+@include('reportes.partials.tabs')
+
 <div class="mb-8 bg-white p-4 rounded-xl shadow-sm border border-gray-200">
     <form action="{{ route('reportes.index') }}" method="GET" class="flex flex-col sm:flex-row gap-4 items-end">
         <div class="flex-1">
