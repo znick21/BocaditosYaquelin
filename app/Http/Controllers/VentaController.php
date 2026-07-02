@@ -57,6 +57,16 @@ class VentaController extends Controller
     }
 
     /**
+     * Imprimir ticket de venta (formato térmico 80mm).
+     */
+    public function ticket(Venta $venta)
+    {
+        $venta->load('usuario', 'detalles.producto', 'metodoPago');
+        $config = \App\Models\Configuracion::obtener();
+        return view('ventas.ticket', compact('venta', 'config'));
+    }
+
+    /**
      * Anular una venta (solo admin).
      */
     public function anular(Venta $venta)

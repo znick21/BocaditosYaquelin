@@ -80,11 +80,21 @@ Route::middleware(['auth'])->group(function () {
         // Anulación de Ventas
         Route::post('/ventas/{venta}/anular', [VentaController::class, 'anular'])->name('ventas.anular');
 
+        // Historial de Ventas
+        Route::get('/ventas', [App\Http\Controllers\VentaController::class, 'index'])->name('ventas.index');
+        Route::get('/ventas/{venta}', [App\Http\Controllers\VentaController::class, 'detalle'])->name('ventas.detalle');
+        Route::get('/ventas/{venta}/ticket', [App\Http\Controllers\VentaController::class, 'ticket'])->name('ventas.ticket');
+
         // Inventario (Producción y Mermas)
         Route::get('/inventario', [\App\Http\Controllers\InventarioController::class, 'index'])->name('inventario.index');
         Route::post('/inventario/planilla', [\App\Http\Controllers\InventarioController::class, 'guardarPlanilla'])->name('inventario.planilla');
+        Route::get('/inventario/historial', [\App\Http\Controllers\InventarioController::class, 'historial'])->name('inventario.historial');
 
         // Reportes
         Route::get('/reportes', [ReporteController::class, 'index'])->name('reportes.index');
+
+        // Configuración General
+        Route::get('/configuracion', [App\Http\Controllers\ConfiguracionController::class, 'index'])->name('configuracion.index');
+        Route::put('/configuracion', [App\Http\Controllers\ConfiguracionController::class, 'update'])->name('configuracion.update');
     });
 });

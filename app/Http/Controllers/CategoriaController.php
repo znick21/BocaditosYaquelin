@@ -53,7 +53,7 @@ class CategoriaController extends Controller
             $datos['imagen'] = $request->file('imagen')->store('categorias', 'public');
         }
 
-        Categoria::create($datos);
+        $categoria = Categoria::create($datos);
 
         return redirect()->route('categorias.index')
             ->with('success', 'Categoría creada exitosamente.');

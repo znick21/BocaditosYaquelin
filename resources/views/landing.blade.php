@@ -163,7 +163,10 @@
         </h2>
         <div class="mt-8 flex lg:mt-0 lg:flex-shrink-0">
             <div class="inline-flex rounded-md shadow">
-                <a href="#" class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-full text-amber-600 bg-white hover:bg-gray-50">
+                @php
+                    $waNumber = preg_replace('/[^0-9]/', '', ($config->codigo_pais ?? '591') . ($config->whatsapp ?? '70000000'));
+                @endphp
+                <a href="https://wa.me/{{ $waNumber }}" target="_blank" class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-full text-amber-600 bg-white hover:bg-gray-50">
                     <i class="fab fa-whatsapp text-green-500 mr-2 text-xl"></i> Hablar por WhatsApp
                 </a>
             </div>
@@ -175,5 +178,41 @@
         </div>
     </div>
 </div>
+
+<!-- Footer Simple -->
+<footer class="bg-gray-900 py-10 text-center">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h3 class="text-white text-xl font-bold mb-4">{{ $config->nombre_negocio ?? 'Bocaditos Yaquelin' }}</h3>
+        
+        @if(!empty($config->redes_sociales) && is_array($config->redes_sociales) && count($config->redes_sociales) > 0)
+        <div class="flex justify-center space-x-6 mb-6">
+            @foreach($config->redes_sociales as $red)
+                @php
+                    $iconClass = 'fas fa-link';
+                    switch(strtolower($red['red'])) {
+                        case 'facebook': $iconClass = 'fab fa-facebook'; break;
+                        case 'instagram': $iconClass = 'fab fa-instagram'; break;
+                        case 'tiktok': $iconClass = 'fab fa-tiktok'; break;
+                        case 'youtube': $iconClass = 'fab fa-youtube'; break;
+                        case 'twitter': $iconClass = 'fab fa-twitter'; break;
+                        case 'linkedin': $iconClass = 'fab fa-linkedin'; break;
+                        case 'website': $iconClass = 'fas fa-globe'; break;
+                    }
+                @endphp
+                <a href="{{ $red['url'] }}" target="_blank" class="text-gray-400 hover:text-amber-500 transition-colors text-2xl">
+                    <span class="sr-only">{{ ucfirst($red['red']) }}</span>
+                    <i class="{{ $iconClass }}"></i>
+                </a>
+            @endforeach
+        </div>
+        @endif
+        
+        <p class="text-gray-500 text-sm">
+            &copy; {{ date('Y') }} {{ $config->nombre_negocio ?? 'Bocaditos Yaquelin' }}. Todos los derechos reservados.
+            <br>
+            {{ $config->direccion ?? '' }}
+        </p>
+    </div>
+</footer>
 
 @endsection

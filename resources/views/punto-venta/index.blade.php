@@ -73,14 +73,14 @@
             <div class="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-4">
                 <template x-for="producto in productosFiltrados()" :key="producto.id">
                     <div @click="agregarAlCarrito(producto)" 
-                         class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden cursor-pointer hover:shadow-md hover:border-amber-300 transition-all transform active:scale-95 flex flex-col h-40 relative group">
+                         class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden cursor-pointer hover:shadow-md hover:border-amber-300 transition-all transform active:scale-95 flex flex-col h-48 sm:h-52 relative group">
                         
                         <div class="absolute inset-0 bg-amber-500 opacity-0 group-hover:opacity-5 transition-opacity pointer-events-none"></div>
 
                         <!-- Info Producto -->
                         <div class="p-3 flex-1 flex flex-col">
                             <span x-text="producto.categoria_nombre" class="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1"></span>
-                            <h3 x-text="producto.nombre" class="text-sm font-bold text-gray-900 leading-tight mb-auto line-clamp-2"></h3>
+                            <h3 x-text="producto.nombre" class="text-base sm:text-lg font-bold text-gray-900 leading-tight mb-auto line-clamp-3"></h3>
                             
                             <div class="mt-2 flex justify-between items-end">
                                 <span class="text-xs font-medium" :class="producto.stock <= producto.stock_minimo ? 'text-red-600' : 'text-green-600'" x-text="producto.stock + ' disp'"></span>
@@ -112,9 +112,10 @@
             </button>
         </div>
 
-        <!-- Lista de Items -->
-        <div class="flex-1 overflow-y-auto p-2 bg-gray-50">
-            
+        <!-- Scrollable Middle Section -->
+        <div class="flex-1 overflow-y-auto bg-gray-50 flex flex-col">
+            <!-- Lista de Items -->
+            <div class="p-2 flex-grow">
             <div x-show="carrito.length === 0" class="h-full flex flex-col items-center justify-center text-gray-400 p-6 text-center" x-cloak>
                 <i class="fas fa-shopping-cart text-5xl mb-4 text-gray-200"></i>
                 <p class="text-sm">Selecciona productos del catálogo para agregarlos a la venta.</p>
@@ -133,12 +134,12 @@
                         <div class="flex justify-between items-center mt-auto">
                             <!-- Controles de Cantidad -->
                             <div class="flex items-center border border-gray-200 rounded-md overflow-hidden bg-gray-50">
-                                <button @click="decrementarItem(index)" class="w-8 h-8 flex items-center justify-center text-gray-600 hover:bg-gray-200 hover:text-gray-900 transition-colors">
-                                    <i class="fas fa-minus text-xs"></i>
+                                <button @click="decrementarItem(index)" class="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center text-gray-600 hover:bg-gray-200 hover:text-gray-900 transition-colors">
+                                    <i class="fas fa-minus sm:text-lg"></i>
                                 </button>
-                                <input type="number" x-model.number="item.cantidad" min="1" :max="item.stock" @change="validarCantidad(index)" class="w-10 h-8 text-center text-sm font-bold bg-white border-x border-gray-200 focus:outline-none focus:ring-0 p-0">
-                                <button @click="incrementarItem(index)" class="w-8 h-8 flex items-center justify-center text-gray-600 hover:bg-gray-200 hover:text-gray-900 transition-colors" :disabled="item.cantidad >= item.stock" :class="{'opacity-50 cursor-not-allowed': item.cantidad >= item.stock}">
-                                    <i class="fas fa-plus text-xs"></i>
+                                <input type="number" x-model.number="item.cantidad" min="1" :max="item.stock" @change="validarCantidad(index)" class="w-12 h-10 sm:h-12 text-center text-base font-bold bg-white border-x border-gray-200 focus:outline-none focus:ring-0 p-0">
+                                <button @click="incrementarItem(index)" class="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center text-gray-600 hover:bg-gray-200 hover:text-gray-900 transition-colors" :disabled="item.cantidad >= item.stock" :class="{'opacity-50 cursor-not-allowed': item.cantidad >= item.stock}">
+                                    <i class="fas fa-plus sm:text-lg"></i>
                                 </button>
                             </div>
 
@@ -150,10 +151,10 @@
                     </li>
                 </template>
             </ul>
-        </div>
+            </div>
 
-        <!-- Totales y Cobro -->
-        <div class="border-t border-gray-200 bg-white p-4 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] z-10">
+            <!-- Totales y Cobro -->
+            <div class="mt-auto border-t border-gray-200 bg-white p-4 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] z-10">
             
             <!-- Método de Pago -->
             <div class="mb-4">
@@ -188,12 +189,58 @@
                     <span>Total</span>
                     <span class="text-amber-600" x-text="'Bs. ' + formatMoney(total)"></span>
                 </div>
+                
+                <div class="flex justify-between text-sm text-gray-600 items-center pt-2" x-show="metodoPagoId === 1" x-cloak>
+                    <span class="font-bold text-gray-800">Efectivo Recibido</span>
+                    <div class="flex items-center">
+                        <span class="mr-1 text-xs font-bold">Bs.</span>
+                        <input type="number" x-model.number="montoRecibido" min="0" class="w-20 text-right border border-gray-300 rounded-md focus:outline-none focus:ring-amber-500 focus:border-amber-500 bg-white py-1 px-2 text-sm font-bold text-green-600 shadow-inner" placeholder="0.00">
+                    </div>
+                </div>
+                <div class="flex justify-between text-sm text-gray-600 items-center" x-show="metodoPagoId === 1 && montoRecibido > 0" x-cloak>
+                    <span>Cambio</span>
+                    <span class="font-bold" :class="montoRecibido < total ? 'text-red-500' : 'text-blue-600'" x-text="(montoRecibido < total ? 'Falta Bs. ' : 'Bs. ') + formatMoney(Math.abs(montoRecibido - total))"></span>
+                </div>
+
+                <!-- Mostrar QR para cobrar (Solo si no es efectivo) -->
+                <div class="mt-4 p-4 bg-gray-50 border border-gray-200 rounded-lg flex flex-col items-center justify-center text-center" x-show="metodoPagoId !== 1 && total > 0" x-cloak>
+                    <p class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Escanea para pagar con QR</p>
+                    
+                    <div class="flex gap-2 mb-4 justify-center">
+                        <button type="button" @click="tipoQR = 'yape'" :class="tipoQR === 'yape' ? 'bg-purple-600 text-white shadow-inner' : 'bg-white text-purple-600 border border-purple-200 hover:bg-purple-50'" class="px-5 py-2 rounded-lg font-bold text-sm sm:text-base transition-colors flex items-center">
+                            Yape
+                        </button>
+                        <button type="button" @click="tipoQR = 'ganadero'" :class="tipoQR === 'ganadero' ? 'bg-green-600 text-white shadow-inner' : 'bg-white text-green-600 border border-green-200 hover:bg-green-50'" class="px-5 py-2 rounded-lg font-bold text-sm sm:text-base transition-colors flex items-center">
+                            B. Ganadero
+                        </button>
+                    </div>
+
+                    <div class="relative w-full flex justify-center">
+                        <!-- QR Yape -->
+                        <div x-show="tipoQR === 'yape'" x-transition.opacity class="bg-white p-3 sm:p-4 rounded-xl shadow-md border border-gray-200 flex flex-col items-center">
+                            <img src="{{ asset('img/QR_Yape.jpeg') }}" alt="QR Yape" class="w-48 h-48 sm:w-64 sm:h-64 object-contain rounded-md" />
+                            <span class="text-xs sm:text-sm font-bold text-purple-700 mt-2 uppercase tracking-widest">Yape</span>
+                        </div>
+                        
+                        <!-- QR Ganadero -->
+                        <div x-show="tipoQR === 'ganadero'" x-transition.opacity class="bg-white p-3 sm:p-4 rounded-xl shadow-md border border-gray-200 flex flex-col items-center" x-cloak>
+                            <img src="{{ asset('img/QR_Ganadero.jpeg') }}" alt="QR Ganadero" class="w-48 h-48 sm:w-64 sm:h-64 object-contain rounded-md" />
+                            <span class="text-xs sm:text-sm font-bold text-green-700 mt-2 uppercase tracking-widest">B. Ganadero</span>
+                        </div>
+                    </div>
+
+                    <p class="text-sm text-gray-600 mt-2">Total a cobrar: <span class="font-bold text-gray-900" x-text="'Bs. ' + formatMoney(total)"></span></p>
+                </div>
             </div>
 
-            <!-- Botón Cobrar -->
-            <button @click="procesarVenta()" :disabled="carrito.length === 0 || procesando" 
+            </div>
+        </div>
+
+        <!-- Panel de Cobro Fijo al Pie -->
+        <div class="p-4 bg-white border-t border-gray-200 flex-shrink-0 z-10">
+            <button @click="procesarVenta()" :disabled="!canCobrar" 
                 class="w-full py-4 rounded-xl text-white font-bold text-lg uppercase tracking-wider flex items-center justify-center transition-all shadow-lg"
-                :class="carrito.length === 0 ? 'bg-gray-300 cursor-not-allowed shadow-none' : (procesando ? 'bg-amber-400 cursor-wait' : 'bg-amber-600 hover:bg-amber-700 hover:shadow-xl active:transform active:translate-y-1')">
+                :class="!canCobrar ? 'bg-gray-300 cursor-not-allowed shadow-none' : (procesando ? 'bg-amber-400 cursor-wait' : 'bg-amber-600 hover:bg-amber-700 hover:shadow-xl active:transform active:translate-y-1')">
                 <i class="fas fa-spinner fa-spin mr-2" x-show="procesando" x-cloak></i>
                 <i class="fas fa-check-circle mr-2" x-show="!procesando"></i>
                 <span x-text="procesando ? 'Procesando...' : 'Cobrar Bs. ' + formatMoney(total)"></span>
@@ -212,11 +259,29 @@
                         <i class="fas fa-check text-2xl text-green-600"></i>
                     </div>
                     <h3 class="text-xl leading-6 font-bold text-gray-900" id="modal-title">¡Venta Exitosa!</h3>
-                    <div class="mt-2">
-                        <p class="text-sm text-gray-500 mb-2" x-text="mensajeExito"></p>
-                        <div class="bg-gray-50 rounded-lg p-3 inline-block">
-                            <p class="text-xs text-gray-500 uppercase tracking-wider mb-1">Cambio a entregar</p>
-                            <p class="text-2xl font-bold text-gray-900">Bs. 0.00</p>
+                    <div class="mt-2 flex flex-col items-center">
+                        <p class="text-sm text-gray-500 mb-4" x-text="mensajeExito"></p>
+                        
+                        <div class="flex w-full space-x-4 mb-4">
+                            <!-- Datos del Cambio -->
+                            <div class="bg-gray-50 rounded-lg p-3 w-full flex flex-col justify-center border border-gray-200">
+                                <template x-if="metodoPagoId === 1">
+                                    <div>
+                                        <p class="text-xs text-gray-500 uppercase tracking-wider mb-1">Efectivo Recibido</p>
+                                        <p class="text-lg font-medium text-gray-700 mb-2" x-text="'Bs. ' + formatMoney(montoRecibido || total)"></p>
+                                        <div class="w-full h-px bg-gray-200 mb-2"></div>
+                                        <p class="text-xs text-gray-500 uppercase tracking-wider mb-1">Cambio a entregar</p>
+                                        <p class="text-2xl font-bold text-blue-600" x-text="'Bs. ' + formatMoney(cambio)"></p>
+                                    </div>
+                                </template>
+                                <template x-if="metodoPagoId !== 1">
+                                    <div>
+                                        <i class="fas fa-check-circle text-4xl text-green-500 mb-2"></i>
+                                        <p class="text-sm font-medium text-gray-700">Pago Electrónico Confirmado</p>
+                                        <p class="text-2xl font-bold text-gray-900 mt-1" x-text="'Bs. ' + formatMoney(total)"></p>
+                                    </div>
+                                </template>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -224,7 +289,7 @@
                     <button type="button" @click="cerrarModalExito()" class="w-full inline-flex justify-center rounded-lg border border-transparent shadow-sm px-4 py-2 bg-amber-600 text-base font-medium text-white hover:bg-amber-700 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm">
                         Nueva Venta
                     </button>
-                    <button type="button" class="mt-3 w-full inline-flex justify-center rounded-lg border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                    <button type="button" @click="imprimirTicket()" x-show="ultimaVentaId" class="mt-3 w-full inline-flex justify-center rounded-lg border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
                         <i class="fas fa-print mr-2 mt-1"></i> Imprimir Ticket
                     </button>
                 </div>
@@ -266,11 +331,14 @@
             carrito: [],
             metodoPagoId: posConfig.metodoPagoDefault,
             descuento: 0,
+            montoRecibido: null,
+            tipoQR: 'yape',
             
             // Estado del Proceso
             procesando: false,
             modalExito: false,
             mensajeExito: '',
+            ultimaVentaId: null,
 
             // Computed Properties (Funciones getter en Alpine)
             get subtotal() {
@@ -280,6 +348,18 @@
             get total() {
                 let t = this.subtotal - (this.descuento || 0);
                 return t > 0 ? t : 0;
+            },
+
+            get cambio() {
+                if (this.metodoPagoId !== 1 || !this.montoRecibido) return 0;
+                let c = this.montoRecibido - this.total;
+                return c > 0 ? c : 0;
+            },
+
+            get canCobrar() {
+                if (this.carrito.length === 0 || this.procesando) return false;
+                if (this.metodoPagoId === 1 && this.montoRecibido !== null && this.montoRecibido !== '' && this.montoRecibido < this.total) return false;
+                return true;
             },
 
             productosFiltrados() {
@@ -375,7 +455,8 @@
                     const response = await axios.post(posConfig.rutaVenta, payload);
                     
                     if(response.data.exito) {
-                        this.mensajeExito = response.data.mensaje;
+                        this.mensajeExito = response.data.mensaje || 'Venta registrada con éxito.';
+                        this.ultimaVentaId = response.data.venta.id;
                         this.modalExito = true;
                         
                         // Actualizar stock local en base al carrito
@@ -383,9 +464,6 @@
                             let p = this.productosCat.find(x => x.id === item.producto_id);
                             if(p) p.stock -= item.cantidad;
                         });
-                        
-                        this.carrito = [];
-                        this.descuento = 0;
                     }
                 } catch (error) {
                     let msg = error.response?.data?.error || 'Error de conexión al servidor.';
@@ -397,6 +475,15 @@
 
             cerrarModalExito() {
                 this.modalExito = false;
+                this.mensajeExito = '';
+                this.ultimaVentaId = null;
+                this.limpiarCarrito();
+            },
+
+            imprimirTicket() {
+                if (this.ultimaVentaId) {
+                    window.open('/ventas/' + this.ultimaVentaId + '/ticket', '_blank');
+                }
             }
         }
     }

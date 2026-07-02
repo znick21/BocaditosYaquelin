@@ -27,7 +27,10 @@ class ProductoController extends Controller
         $query = Producto::with('categoria');
 
         if ($request->filled('buscar')) {
-            $query->where('nombre', 'like', '%' . $request->buscar . '%');
+            $query->where(function($q) use ($request) {
+                $q->where('nombre', 'like', '%' . $request->buscar . '%')
+                  ->orWhere('codigo', 'like', '%' . $request->buscar . '%');
+            });
         }
 
         if ($request->filled('categoria')) {
@@ -75,7 +78,7 @@ class ProductoController extends Controller
             $datos['imagen'] = $request->file('imagen')->store('productos', 'public');
         }
 
-        Producto::create($datos);
+        $producto = Producto::create($datos);
 
         return redirect()->route('productos.index')
             ->with('success', 'Producto creado exitosamente.');

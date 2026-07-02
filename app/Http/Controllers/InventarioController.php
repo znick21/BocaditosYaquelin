@@ -114,4 +114,30 @@ class InventarioController extends Controller
             return redirect()->back()->with('error', $e->getMessage());
         }
     }
+
+    public function historial(Request $request)
+    {
+        $query = InventarioMovimiento::with(['producto', 'usuario'])->latest();
+
+        if ($request->filled('fecha_inicio')) {
+            $query->whereDate('created_at', '>=', $request->fecha_inicio);
+        }
+
+        if ($request->filled('fecha_fin')) {
+            $query->whereDate('created_at', '<=', $request->fecha_fin);
+        }
+
+        if ($request->filled('tipo')) {
+            $query->where('tipo', $request->tipo);
+        }
+
+        if ($request->filled('producto_id')) {
+            $query->where('producto_id', $request->producto_id);
+        }
+
+        $movimientos = $query->paginate(20)->withQueryString();
+        $productos = Producto::orderBy('nombre')->get();
+
+        return view('inventario.historial', compact('movimientos', 'productos'));
+    }
 }

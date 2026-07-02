@@ -17,6 +17,8 @@
         @method('PUT')
 
         <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+
+
             <!-- Nombre -->
             <div class="col-span-2 sm:col-span-1">
                 <label for="nombre" class="block text-sm font-medium text-gray-700">Nombre de la Categoría <span class="text-red-500">*</span></label>

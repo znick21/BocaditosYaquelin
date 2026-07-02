@@ -16,6 +16,8 @@
         @csrf
 
         <div class="grid grid-cols-1 gap-y-6 gap-x-6 sm:grid-cols-6">
+
+
             <!-- Nombre -->
             <div class="sm:col-span-4">
                 <label for="nombre" class="block text-sm font-medium text-gray-700">Nombre del Producto <span class="text-red-500">*</span></label>

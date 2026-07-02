@@ -21,8 +21,8 @@ class Configuracion extends Model
 
     protected $fillable = [
         'nombre_negocio', 'eslogan', 'logo', 'favicon',
-        'telefono', 'whatsapp', 'email', 'direccion',
-        'facebook', 'instagram', 'tiktok',
+        'codigo_pais', 'telefono', 'whatsapp', 'email', 'direccion',
+        'redes_sociales',
         'moneda', 'impuesto_porcentaje',
         'horario_apertura', 'horario_cierre',
         'color_primario', 'color_secundario',
@@ -32,6 +32,7 @@ class Configuracion extends Model
     {
         return [
             'impuesto_porcentaje' => 'decimal:2',
+            'redes_sociales' => 'array',
         ];
     }
 

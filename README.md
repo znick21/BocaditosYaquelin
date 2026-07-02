@@ -1,59 +1,30 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Sistema POS - Bocaditos Yaquelin
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Sistema integral de Punto de Venta (POS) y Administración de Inventario, diseñado específicamente para **Bocaditos Yaquelin**.
 
-## About Laravel
+## 🚀 Características Principales
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- **Punto de Venta (POS):** Interfaz ágil para ventas rápidas con cobro en Efectivo o pagos digitales, selector visual de QR, cálculo automático de vuelto.
+- **Tickets Térmicos:** Generación instantánea de recibos de venta adaptados a impresoras térmicas de 80mm.
+- **Control de Inventario:** Gestión de productos, control de stock y mermas. El stock se descuenta automáticamente con cada venta.
+- **Gestión de Caja:** Apertura y cierre de caja, control de flujo y cálculo automatizado para detectar descuadres.
+- **Reportes Visuales:** Estadísticas mensuales de ingresos, productos más vendidos (Top 5) y desglose por método de pago.
+- **Configuración y Landing Page:** Personalización del negocio (WhatsApp, Redes, Logo) en tiempo real, reflejándose en una Landing Page pública y en los tickets.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 📸 Capturas de Pantalla
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### 1. Interfaz de Punto de Venta y Cobro QR
+![POS Yape QR](docs/images/pos_yape_qr.png)
 
-## Learning Laravel
+### 2. Panel Lateral de Carrito (Scroll Dinámico)
+![POS Scroll Demo](docs/images/pos_scroll_demo.png)
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+### 3. Ticket de Venta (Formato Térmico 80mm)
+![Ticket de Venta](docs/images/pos_ticket.png)
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## 🛠️ Stack Tecnológico
 
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+- **Backend:** Laravel 11 (PHP 8)
+- **Frontend Interactividad:** Alpine.js
+- **Frontend Estilos:** Tailwind CSS
+- **Base de Datos:** MySQL (Gestión concurrente con transacciones)

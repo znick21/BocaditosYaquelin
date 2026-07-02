@@ -78,9 +78,9 @@
     <div class="lg:col-span-2 bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
         <div class="bg-gray-50 px-6 py-4 border-b border-gray-200 flex justify-between items-center">
             <h3 class="text-lg font-bold text-gray-900">Detalle del Pedido</h3>
-            <button class="text-sm text-amber-600 hover:text-amber-700 font-medium bg-amber-50 px-3 py-1 rounded-md">
+            <a href="{{ route('ventas.ticket', $venta) }}" target="_blank" class="text-sm text-amber-600 hover:text-amber-700 font-medium bg-amber-50 px-3 py-1 rounded-md">
                 <i class="fas fa-print mr-1"></i> Imprimir Recibo
-            </button>
+            </a>
         </div>
         
         <div class="overflow-x-auto">

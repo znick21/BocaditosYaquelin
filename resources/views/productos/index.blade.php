@@ -11,7 +11,40 @@
 @endsection
 
 @section('content')
-<!-- Filtros eliminados a favor de DataTables -->
+<div class="mb-6 bg-white p-4 rounded-xl shadow-sm border border-gray-200">
+    <form action="{{ route('productos.index') }}" method="GET" class="flex flex-col sm:flex-row gap-4 items-end">
+        <div class="flex-1 w-full">
+            <label for="buscar" class="block text-sm font-medium text-gray-700 mb-1">Buscar Producto o Código</label>
+            <div class="relative rounded-md shadow-sm">
+                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <i class="fas fa-search text-gray-400"></i>
+                </div>
+                <input type="text" name="buscar" id="buscar" value="{{ request('buscar') }}" class="focus:ring-amber-500 focus:border-amber-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md py-2 px-3 border" placeholder="Ej. Torta de chocolate, PROD-01...">
+            </div>
+        </div>
+        <div class="w-full sm:w-64">
+            <label for="categoria" class="block text-sm font-medium text-gray-700 mb-1">Filtrar por Categoría</label>
+            <select id="categoria" name="categoria" class="focus:ring-amber-500 focus:border-amber-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md py-2 px-3 border">
+                <option value="">Todas las categorías</option>
+                @foreach($categorias as $cat)
+                    <option value="{{ $cat->id }}" {{ request('categoria') == $cat->id ? 'selected' : '' }}>{{ $cat->nombre }}</option>
+                @endforeach
+            </select>
+        </div>
+        <div>
+            <button type="submit" class="w-full sm:w-auto inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gray-900 hover:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900">
+                <i class="fas fa-filter mr-2"></i> Filtrar
+            </button>
+        </div>
+        @if(request()->has('buscar') || request()->has('categoria'))
+        <div>
+            <a href="{{ route('productos.index') }}" class="w-full sm:w-auto inline-flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500">
+                Limpiar
+            </a>
+        </div>
+        @endif
+    </form>
+</div>
 
 <div class="bg-white shadow-sm rounded-xl border border-gray-200 overflow-hidden">
     <div class="overflow-x-auto p-4">
@@ -22,6 +55,7 @@
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Producto</th>
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Categoría</th>
                     <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Precio / Costo</th>
+                    <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Stock</th>
 
                     <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Estado</th>
                     <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
@@ -57,6 +91,11 @@
                         <div class="text-sm font-bold text-amber-600">Bs. {{ number_format($producto->precio, 2) }}</div>
                         <div class="text-xs text-gray-500">Costo: Bs. {{ number_format($producto->costo, 2) }}</div>
                     </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-center">
+                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $producto->stock <= $producto->stock_minimo ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800' }}">
+                            {{ $producto->stock }}
+                        </span>
+                    </td>
 
                     <td class="px-6 py-4 whitespace-nowrap text-center">
                         <form action="{{ route('productos.estado', $producto) }}" method="POST" class="inline">
@@ -83,7 +122,7 @@
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="6" class="px-6 py-10 text-center text-gray-500">
+                    <td colspan="7" class="px-6 py-10 text-center text-gray-500">
                         <div class="flex flex-col items-center">
                             <i class="fas fa-box-open text-4xl text-gray-300 mb-3"></i>
                             <p>No se encontraron productos.</p>

@@ -133,6 +133,11 @@
                     <i class="fas fa-chart-line w-6"></i>
                     Reportes
                 </a>
+                
+                <a href="{{ route('configuracion.index') }}" class="flex items-center px-3 py-2.5 rounded-lg {{ request()->routeIs('configuracion.*') ? 'bg-amber-50 text-amber-600 font-medium' : 'text-gray-600 hover:bg-gray-100' }}">
+                    <i class="fas fa-cogs w-6"></i>
+                    Configuración
+                </a>
             @endif
         </nav>
 
