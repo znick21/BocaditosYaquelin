@@ -63,7 +63,16 @@
                             <span class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm font-bold">
                                 +
                             </span>
-                            <input type="text" name="codigo_pais" value="{{ old('codigo_pais', $config->codigo_pais ?? '591') }}" placeholder="591" class="w-16 block border border-r-0 border-gray-300 focus:ring-amber-500 focus:border-amber-500 sm:text-sm py-2 px-2 text-center" required>
+                            <select name="codigo_pais" class="w-24 block border border-r-0 border-gray-300 focus:ring-amber-500 focus:border-amber-500 sm:text-sm py-2 px-1 text-center bg-white" required>
+                                <option value="591" {{ old('codigo_pais', $config->codigo_pais ?? '591') == '591' ? 'selected' : '' }}>591 (BO)</option>
+                                <option value="51" {{ old('codigo_pais', $config->codigo_pais) == '51' ? 'selected' : '' }}>51 (PE)</option>
+                                <option value="54" {{ old('codigo_pais', $config->codigo_pais) == '54' ? 'selected' : '' }}>54 (AR)</option>
+                                <option value="56" {{ old('codigo_pais', $config->codigo_pais) == '56' ? 'selected' : '' }}>56 (CL)</option>
+                                <option value="57" {{ old('codigo_pais', $config->codigo_pais) == '57' ? 'selected' : '' }}>57 (CO)</option>
+                                <option value="52" {{ old('codigo_pais', $config->codigo_pais) == '52' ? 'selected' : '' }}>52 (MX)</option>
+                                <option value="1" {{ old('codigo_pais', $config->codigo_pais) == '1' ? 'selected' : '' }}>1 (US)</option>
+                                <option value="34" {{ old('codigo_pais', $config->codigo_pais) == '34' ? 'selected' : '' }}>34 (ES)</option>
+                            </select>
                             <input type="text" name="whatsapp" value="{{ old('whatsapp', $config->whatsapp) }}" placeholder="Ej: 79007680" class="flex-1 block w-full border border-gray-300 rounded-none rounded-r-md focus:ring-amber-500 focus:border-amber-500 sm:text-sm py-2 px-3">
                         </div>
                         <p class="mt-1 text-xs text-gray-500">Código de país (ej. 591) y el número sin espacios.</p>
