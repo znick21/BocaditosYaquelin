@@ -37,6 +37,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/pos', [PuntoVentaController::class, 'index'])->name('pos.index');
     Route::post('/pos/venta', [PuntoVentaController::class, 'registrarVenta'])->name('pos.venta');
 
+    // ── Perfil de Usuario ──
+    Route::get('/perfil', [\App\Http\Controllers\PerfilController::class, 'edit'])->name('perfil.edit');
+    Route::put('/perfil', [\App\Http\Controllers\PerfilController::class, 'update'])->name('perfil.update');
+
     // ── Historial de Ventas ──
     Route::get('/ventas', [VentaController::class, 'index'])->name('ventas.index');
     Route::get('/ventas/{venta}', [VentaController::class, 'detalle'])->name('ventas.detalle');
@@ -44,6 +48,16 @@ Route::middleware(['auth'])->group(function () {
     // ── Rutas Exclusivas para Administradores ──
     Route::middleware(['\App\Http\Middleware\VerificarRol:admin'])->group(function () {
         
+        // Usuarios (Personal)
+        Route::resource('usuarios', \App\Http\Controllers\UserController::class)->except(['show', 'destroy'])->names([
+            'index' => 'usuarios.index',
+            'create' => 'usuarios.crear',
+            'store' => 'usuarios.guardar',
+            'edit' => 'usuarios.editar',
+            'update' => 'usuarios.actualizar',
+        ]);
+        Route::post('usuarios/{usuario}/estado', [\App\Http\Controllers\UserController::class, 'cambiarEstado'])->name('usuarios.estado');
+
         // Categorías
         Route::resource('categorias', CategoriaController::class)->except(['show'])->names([
             'index' => 'categorias.index',
@@ -94,6 +108,9 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/reportes', [ReporteController::class, 'index'])->name('reportes.index');
         Route::get('/reportes/inventario', [ReporteController::class, 'inventario'])->name('reportes.inventario');
         Route::get('/reportes/cajas', [ReporteController::class, 'cajas'])->name('reportes.cajas');
+
+        // Auditoria
+        Route::get('/auditoria', [\App\Http\Controllers\AuditoriaController::class, 'index'])->name('auditoria.index');
 
         // Configuración General
         Route::get('/configuracion', [App\Http\Controllers\ConfiguracionController::class, 'index'])->name('configuracion.index');

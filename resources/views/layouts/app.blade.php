@@ -109,6 +109,11 @@
             @if(auth()->user()->isAdmin())
                 <div class="pt-4 pb-2 px-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">Administración</div>
                 
+                <a href="{{ route('usuarios.index') }}" class="group flex items-center px-2 py-2 text-sm font-medium rounded-md {{ request()->routeIs('usuarios.*') ? 'bg-amber-100 text-amber-700' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900' }}">
+                    <i class="fas fa-users mr-3 flex-shrink-0 h-5 w-5 {{ request()->routeIs('usuarios.*') ? 'text-amber-600' : 'text-gray-400 group-hover:text-gray-500' }} text-center"></i>
+                    Usuarios y Personal
+                </a>
+
                 <a href="{{ route('categorias.index') }}" class="group flex items-center px-2 py-2 text-sm font-medium rounded-md {{ request()->routeIs('categorias.*') ? 'bg-amber-100 text-amber-700' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900' }}">
                     <i class="fas fa-tags mr-3 flex-shrink-0 h-5 w-5 {{ request()->routeIs('categorias.*') ? 'text-amber-600' : 'text-gray-400 group-hover:text-gray-500' }} text-center"></i>
                     Categorías
@@ -138,6 +143,13 @@
                     <i class="fas fa-cogs w-6"></i>
                     Configuración
                 </a>
+
+                <div class="pt-4 pb-2 px-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">Seguridad</div>
+                
+                <a href="{{ route('auditoria.index') }}" class="flex items-center px-3 py-2.5 rounded-lg {{ request()->routeIs('auditoria.*') ? 'bg-red-50 text-red-600 font-medium' : 'text-gray-600 hover:bg-gray-100' }}">
+                    <i class="fas fa-shield-alt w-6"></i>
+                    Auditoría DB
+                </a>
             @endif
         </nav>
 
@@ -148,8 +160,10 @@
                     {{ substr(auth()->user()->name, 0, 1) }}
                 </div>
                 <div class="ml-3 flex-1 overflow-hidden">
-                    <p class="text-sm font-medium text-gray-900 truncate">{{ auth()->user()->name }}</p>
-                    <p class="text-xs text-gray-500 truncate">{{ ucfirst(auth()->user()->role) }}</p>
+                    <a href="{{ route('perfil.edit') }}" class="group block">
+                        <p class="text-sm font-medium text-gray-900 truncate group-hover:text-amber-600 group-hover:underline">{{ auth()->user()->name }}</p>
+                        <p class="text-xs text-gray-500 truncate">{{ ucfirst(auth()->user()->role) }}</p>
+                    </a>
                 </div>
                 <form method="POST" action="{{ route('logout') }}" class="ml-2">
                     @csrf
